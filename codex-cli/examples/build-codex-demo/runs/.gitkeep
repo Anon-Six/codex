@@ -1,0 +1,102 @@
+# fanciest_todo_list.py
+
+import tkinter as tk
+from tkinter import messagebox, simpledialog, ttk
+
+class FancyTodoApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        self.title("🌟 Fanciest Todo List App 🌟")
+        self.geometry("500x600")
+        self.configure(bg="#22223b")
+        self.tasks = []
+        self.create_widgets()
+
+    def create_widgets(self):
+        style = ttk.Style(self)
+        style.theme_use('clam')
+        style.configure("TButton", font=("Segoe UI", 12), padding=6, background="#4a4e69", foreground="#f2e9e4")
+        style.configure("TLabel", background="#22223b", foreground="#f2e9e4", font=("Segoe UI", 14, "bold"))
+
+        title = ttk.Label(self, text="✨ My Fancy Todo List ✨")
+        title.pack(pady=20)
+
+        self.task_entry = ttk.Entry(self, font=("Segoe UI", 12), width=30)
+        self.task_entry.pack(pady=10)
+        self.task_entry.bind("<Return>", lambda e: self.add_task())
+
+        add_btn = ttk.Button(self, text="Add Task", command=self.add_task)
+        add_btn.pack(pady=5)
+
+        self.tasks_frame = tk.Frame(self, bg="#22223b")
+        self.tasks_frame.pack(fill=tk.BOTH, expand=True, pady=10)
+
+        self.tasks_canvas = tk.Canvas(self.tasks_frame, bg="#22223b", highlightthickness=0)
+        self.scrollbar = ttk.Scrollbar(self.tasks_frame, orient="vertical", command=self.tasks_canvas.yview)
+        self.scrollable_frame = tk.Frame(self.tasks_canvas, bg="#22223b")
+
+        self.scrollable_frame.bind(
+            "<Configure>",
+            lambda e: self.tasks_canvas.configure(
+                scrollregion=self.tasks_canvas.bbox("all")
+            )
+        )
+
+        self.tasks_canvas.create_window((0, 0), window=self.scrollable_frame, anchor="nw")
+        self.tasks_canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.tasks_canvas.pack(side="left", fill="both", expand=True)
+        self.scrollbar.pack(side="right", fill="y")
+
+        clear_btn = ttk.Button(self, text="Clear All", command=self.clear_tasks)
+        clear_btn.pack(pady=10)
+
+    def add_task(self):
+        task = self.task_entry.get().strip()
+        if task:
+            self.tasks.append({"text": task, "done": False})
+            self.task_entry.delete(0, tk.END)
+            self.refresh_tasks()
+        else:
+            messagebox.showwarning("Input Error", "Please enter a task.")
+
+    def toggle_task(self, idx):
+        self.tasks[idx]["done"] = not self.tasks[idx]["done"]
+        self.refresh_tasks()
+
+    def delete_task(self, idx):
+        del self.tasks[idx]
+        self.refresh_tasks()
+
+    def edit_task(self, idx):
+        new_text = simpledialog.askstring("Edit Task", "Update your task:", initialvalue=self.tasks[idx]["text"])
+        if new_text:
+            self.tasks[idx]["text"] = new_text
+            self.refresh_tasks()
+
+    def clear_tasks(self):
+        if messagebox.askyesno("Clear All", "Are you sure you want to clear all tasks?"):
+            self.tasks.clear()
+            self.refresh_tasks()
+
+    def refresh_tasks(self):
+        for widget in self.scrollable_frame.winfo_children():
+            widget.destroy()
+        for idx, task in enumerate(self.tasks):
+            frame = tk.Frame(self.scrollable_frame, bg="#22223b")
+            frame.pack(fill="x", pady=2, padx=5)
+            chk = tk.Checkbutton(
+                frame, text=task["text"], variable=tk.BooleanVar(value=task["done"]),
+                onvalue=True, offvalue=False, command=lambda i=idx: self.toggle_task(i),
+                font=("Segoe UI", 12, "italic" if task["done"] else "normal"),
+                bg="#22223b", fg="#9a8c98", selectcolor="#c9ada7", activebackground="#22223b"
+            )
+            chk.pack(side="left", fill="x", expand=True)
+            edit_btn = ttk.Button(frame, text="✏️", width=2, command=lambda i=idx: self.edit_task(i))
+            edit_btn.pack(side="right", padx=2)
+            del_btn = ttk.Button(frame, text="🗑️", width=2, command=lambda i=idx: self.delete_task(i))
+            del_btn.pack(side="right", padx=2)
+
+if __name__ == "__main__":
+    app = FancyTodoApp()
+    app.mainloop()
