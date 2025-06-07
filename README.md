@@ -736,6 +736,22 @@ Follow the instructions in each subdirectory to install dependencies and run the
 python install_integra.py
 ```
 
+### Building a Windows installer
+
+To package everything into a single Windows installer, first ensure Node.js and Python are installed. Then run the following commands:
+
+```bash
+# build the backend executable
+powershell -ExecutionPolicy Bypass -File scripts/build_backend_exe.ps1
+
+# package the Electron app and backend
+cd integra_electron
+npm install
+npm run build
+```
+
+The resulting `exe` installer will be created under `integra_electron/dist/`.
+
 ---
 
 ## Security & responsible AI
