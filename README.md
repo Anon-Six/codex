@@ -730,7 +730,11 @@ This repository also includes a small demo split across three folders:
 - [`integra_backend/`](./integra_backend/README.md) – Flask API that proxies to a local Ollama server
 - [`integra_electron/`](./integra_electron/README.md) – Electron wrapper to run the demo as a desktop app
 
-Follow the instructions in each subdirectory to install dependencies and run the demo.
+Follow the instructions in each subdirectory to install dependencies and run the demo. Alternatively, you can run the cross-platform installer script from the repository root:
+
+```bash
+python install_integra.py
+```
 
 ---
 
