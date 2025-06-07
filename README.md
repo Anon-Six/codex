@@ -5,7 +5,6 @@
 
 ![Codex demo GIF using: codex "explain this codebase to me"](./.github/demo.gif)
 
----
 
 <details>
 <summary><strong>Table of contents</strong></summary>
@@ -48,7 +47,8 @@
     - [Quick fixes](#quick-fixes)
   - [Releasing `codex`](#releasing-codex)
   - [Alternative build options](#alternative-build-options)
-    - [Nix flake development](#nix-flake-development)
+-  - [Nix flake development](#nix-flake-development)
+- [INTEGRA demo](#integra-demo)
 - [Security & responsible AI](#security--responsible-ai)
 - [License](#license)
 
@@ -719,6 +719,38 @@ echo "use flake ../flake.nix#codex-cli" >> .envrc && direnv allow
 cd codex-cli
 echo "use flake ../flake.nix#codex-rs" >> .envrc && direnv allow
 ```
+
+---
+
+## INTEGRA application
+
+The repository ships with a complete desktop version of INTEGRA split across three folders:
+
+- [`frontend/`](./frontend/README.md) – React interface with hologram effects and chat controls
+- [`integra_backend/`](./integra_backend/README.md) – Flask API that proxies requests to a local Ollama server
+- [`integra_electron/`](./integra_electron/README.md) – Electron wrapper to launch the frontend as a desktop application
+
+Install the dependencies and launch everything at once with the provided installer script:
+
+```bash
+python install_integra.py
+```
+
+### Building a Windows installer
+
+To package everything into a single Windows installer, first ensure Node.js and Python are installed. Then run the following commands:
+
+```bash
+# build the backend executable
+powershell -ExecutionPolicy Bypass -File scripts/build_backend_exe.ps1
+
+# package the Electron app and backend
+cd integra_electron
+npm install
+npm run build
+```
+
+The resulting `exe` installer will be created under `integra_electron/dist/`.
 
 ---
 

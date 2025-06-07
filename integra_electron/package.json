@@ -1,0 +1,34 @@
+{
+  "name": "integra-electron",
+  "version": "1.0.0",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder --win --x64"
+  },
+  "devDependencies": {
+    "electron": "^29.0.0",
+    "electron-builder": "^24.13.1"
+  },
+  "build": {
+    "appId": "com.example.integra",
+    "asar": true,
+    "files": [
+      "**/*",
+      "!dist",
+      "!build"
+    ],
+    "extraFiles": [
+      {
+        "from": "../integra_backend",
+        "to": "backend",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "target": "nsis"
+    }
+  }
+}
