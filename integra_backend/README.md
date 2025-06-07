@@ -25,3 +25,13 @@ Environment variables (see `.env.example` for a template):
 The server exposes two routes:
 - `GET /api/status` – check model availability
 - `POST /api/chat` – send a prompt and receive a response from the model
+
+### On Windows (PowerShell)
+Run these commands from the `integra_backend` directory:
+```powershell
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+Copy-Item .env.example .env
+python app.py
+```
