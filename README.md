@@ -722,15 +722,15 @@ echo "use flake ../flake.nix#codex-rs" >> .envrc && direnv allow
 
 ---
 
-## INTEGRA demo
+## INTEGRA application
 
-This repository also includes a small demo split across three folders:
+The repository ships with a complete desktop version of INTEGRA split across three folders:
 
-- [`frontend/`](./frontend/README.md) – static HTML/JS interface
-- [`integra_backend/`](./integra_backend/README.md) – Flask API that proxies to a local Ollama server
-- [`integra_electron/`](./integra_electron/README.md) – Electron wrapper to run the demo as a desktop app
+- [`frontend/`](./frontend/README.md) – React interface with hologram effects and chat controls
+- [`integra_backend/`](./integra_backend/README.md) – Flask API that proxies requests to a local Ollama server
+- [`integra_electron/`](./integra_electron/README.md) – Electron wrapper to launch the frontend as a desktop application
 
-Follow the instructions in each subdirectory to install dependencies and run the demo. Alternatively, you can run the cross-platform installer script from the repository root:
+Install the dependencies and launch everything at once with the provided installer script:
 
 ```bash
 python install_integra.py
