@@ -5,7 +5,6 @@
 
 ![Codex demo GIF using: codex "explain this codebase to me"](./.github/demo.gif)
 
----
 
 <details>
 <summary><strong>Table of contents</strong></summary>
@@ -48,7 +47,8 @@
     - [Quick fixes](#quick-fixes)
   - [Releasing `codex`](#releasing-codex)
   - [Alternative build options](#alternative-build-options)
-    - [Nix flake development](#nix-flake-development)
+-  - [Nix flake development](#nix-flake-development)
+- [INTEGRA demo](#integra-demo)
 - [Security & responsible AI](#security--responsible-ai)
 - [License](#license)
 
@@ -719,6 +719,18 @@ echo "use flake ../flake.nix#codex-cli" >> .envrc && direnv allow
 cd codex-cli
 echo "use flake ../flake.nix#codex-rs" >> .envrc && direnv allow
 ```
+
+---
+
+## INTEGRA demo
+
+This repository also includes a small demo split across three folders:
+
+- [`frontend/`](./frontend/README.md) – static HTML/JS interface
+- [`integra_backend/`](./integra_backend/README.md) – Flask API that proxies to a local Ollama server
+- [`integra_electron/`](./integra_electron/README.md) – Electron wrapper to run the demo as a desktop app
+
+Follow the instructions in each subdirectory to install dependencies and run the demo.
 
 ---
 
